@@ -12,8 +12,8 @@ import MaterialAddPage from './pages/MaterialAddPage';
 import RewardStorePage from './pages/RewardStorePage';
 import MaterialHistoryPage from './pages/MaterialHistoryPage';
 import DealerPanel from './pages/DealerPanel';
-
-
+import ChipHistoryPage from './pages/ChipHistoryPage';
+import IncomingOffersPage from './pages/IncomingOffersPage';
 
 function App() {
   return (
@@ -29,6 +29,9 @@ function App() {
         <Route path="/reward-store" element={<RewardStorePage />} />
         <Route path="/material-history" element={<MaterialHistoryPage />} />
         <Route path="/dealer" element={<DealerPanel />} />
+        <Route path="/dealer/chip-history" element={<ChipHistoryPage />} />
+        <Route path="/dealer/incoming-offers" element={<IncomingOffersPage />} />
+
 
       </Routes>
     </Router>
