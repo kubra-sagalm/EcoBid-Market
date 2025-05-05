@@ -36,7 +36,14 @@ const DealerPanel = () => {
                 Satın Alınacak Malzemeler
                 </Button>
 
-          <Button block size="large">Açık Artırma Listesi</Button>
+                <Button
+                block
+                style={{ minHeight: '55px', marginBottom: '16px', fontWeight: 'bold' }}
+                onClick={() => navigate('/dealer/auctions')}
+              >
+                Açık Artırma Listesi
+              </Button>
+
           <Button block size="large">Firma Satışı</Button>
           <Button block size="large" onClick={() => navigate('/dealer/chip-history')}>
          Çip Bakiyesi ve Geçmişi

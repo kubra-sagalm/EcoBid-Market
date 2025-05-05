@@ -24,13 +24,13 @@ const CompanyPanel = () => {
 
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <Button
-            block
-            size="large"
-            icon={<FontAwesomeIcon icon={faGavel} />}
-            onClick={() => navigate('/company/auctions')}
-            >
-            Açık Artırma Listesi
-            </Button>
+  block
+  size="large"
+  icon={<FontAwesomeIcon icon={faGavel} />}
+  onClick={() => navigate('/company-auctions')}
+>
+  Açık Artırma Listesi
+</Button>
 
 
           <Button block size="large" icon={<ClockCircleOutlined />}>

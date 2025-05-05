@@ -18,6 +18,8 @@ import CompanyPanel from './pages/CompanyPanel';
 import AuctionListPage from './pages/AuctionListPage';
 import MaterialSearchPage from './pages/MaterialSearchPage';
 import PurchaseDetailPage from './pages/PurchaseDetailPage';
+import OfferDetailPage from './pages/OfferDetailPage';
+import CompanyAuctionPage from './pages/CompanyAuctionPage';
 
 
 function App() {
@@ -37,10 +39,11 @@ function App() {
         <Route path="/dealer/chip-history" element={<ChipHistoryPage />} />
         <Route path="/dealer/incoming-offers" element={<IncomingOffersPage />} />
         <Route path="/company" element={<CompanyPanel />} />
-        <Route path="/company/auctions" element={<AuctionListPage />} />
         <Route path="/dealer/search" element={<MaterialSearchPage />} />
         <Route path="/dealer/purchase-detail" element={<PurchaseDetailPage />} />
-
+        <Route path="/dealer/offer-detail" element={<OfferDetailPage />} />
+        <Route path="/dealer/auctions" element={<AuctionListPage />} />
+        <Route path="/company-auctions" element={<CompanyAuctionPage />} />
 
 
       </Routes>
