@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
-import { Typography, Radio, Row, Col, Card, Button } from 'antd';
-import { useNavigate } from 'react-router-dom'; // yönlendirme için
+import { Typography, Radio, Row, Col, Card, Button, Alert } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
 const SelectRolePage = () => {
-  const [selectedRole, setSelectedRole] = useState('araci');
+  const [selectedRole, setSelectedRole] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const handleContinue = () => {
+    if (!selectedRole) {
+      setErrorMessage('Lütfen bir rol seçiniz.');
+      return;
+    }
+
+    setErrorMessage(''); // hata varsa temizle
+
     if (selectedRole === 'musteri') {
       navigate('/individual');
     } else if (selectedRole === 'araci') {
       navigate('/dealer');
-    } else {
-      alert('Bu rol için sayfa henüz aktif değil.');
+    } else if (selectedRole === 'firma') {
+      navigate('/company');
     }
   };
-  
 
   return (
     <Row
@@ -44,6 +51,16 @@ const SelectRolePage = () => {
             <Radio value="araci"><strong>Aracı</strong></Radio>
             <Radio value="firma"><strong>Firma</strong></Radio>
           </Radio.Group>
+
+          {/* HATA MESAJI GÖSTERİMİ */}
+          {errorMessage && (
+            <Alert
+              message={errorMessage}
+              type="error"
+              showIcon
+              style={{ marginTop: '20px' }}
+            />
+          )}
 
           <div style={{ position: 'absolute', bottom: '20px', right: '20px' }}>
             <Button type="primary" onClick={handleContinue}>
