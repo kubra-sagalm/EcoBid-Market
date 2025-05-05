@@ -9,9 +9,15 @@ const SelectRolePage = () => {
   const navigate = useNavigate();
 
   const handleContinue = () => {
-    // Şimdilik her durumda birey paneline yönlendiriyoruz
-    navigate('/individual');
+    if (selectedRole === 'musteri') {
+      navigate('/individual');
+    } else if (selectedRole === 'araci') {
+      navigate('/dealer');
+    } else {
+      alert('Bu rol için sayfa henüz aktif değil.');
+    }
   };
+  
 
   return (
     <Row

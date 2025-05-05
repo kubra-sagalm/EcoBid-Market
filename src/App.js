@@ -11,6 +11,9 @@ import IndividualPanel from './pages/IndividualPanel';
 import MaterialAddPage from './pages/MaterialAddPage';
 import RewardStorePage from './pages/RewardStorePage';
 import MaterialHistoryPage from './pages/MaterialHistoryPage';
+import DealerPanel from './pages/DealerPanel';
+
+
 
 function App() {
   return (
@@ -25,6 +28,8 @@ function App() {
         <Route path="/material-add" element={<MaterialAddPage />} />
         <Route path="/reward-store" element={<RewardStorePage />} />
         <Route path="/material-history" element={<MaterialHistoryPage />} />
+        <Route path="/dealer" element={<DealerPanel />} />
+
       </Routes>
     </Router>
   );
