@@ -20,7 +20,14 @@ const DealerPanel = () => {
         </Title>
 
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
-          <Button block size="large">Malzeme Arama</Button>
+        <Button
+            block
+            style={{ fontWeight: 'bold' }}
+            onClick={() => navigate('/dealer/search')}
+            >
+            Malzeme Arama
+            </Button>
+
           <Button block size="large">Satın Alınacak Malzemeler</Button>
           <Button block size="large">Açık Artırma Listesi</Button>
           <Button block size="large">Firma Satışı</Button>

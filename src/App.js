@@ -15,6 +15,8 @@ import DealerPanel from './pages/DealerPanel';
 import ChipHistoryPage from './pages/ChipHistoryPage';
 import IncomingOffersPage from './pages/IncomingOffersPage';
 import CompanyPanel from './pages/CompanyPanel';
+import AuctionListPage from './pages/AuctionListPage';
+import MaterialSearchPage from './pages/MaterialSearchPage';
 
 
 function App() {
@@ -34,6 +36,9 @@ function App() {
         <Route path="/dealer/chip-history" element={<ChipHistoryPage />} />
         <Route path="/dealer/incoming-offers" element={<IncomingOffersPage />} />
         <Route path="/company" element={<CompanyPanel />} />
+        <Route path="/company/auctions" element={<AuctionListPage />} />
+        <Route path="/dealer/search" element={<MaterialSearchPage />} />
+
 
 
       </Routes>

@@ -3,10 +3,14 @@ import { Typography, Row, Col, Button, Space } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGavel } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+
 
 const { Title } = Typography;
 
 const CompanyPanel = () => {
+    const navigate = useNavigate();
+
   return (
     <Row
       justify="center"
@@ -19,9 +23,15 @@ const CompanyPanel = () => {
         </Title>
 
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
-          <Button block size="large" icon={<FontAwesomeIcon icon={faGavel} />}>
+        <Button
+            block
+            size="large"
+            icon={<FontAwesomeIcon icon={faGavel} />}
+            onClick={() => navigate('/company/auctions')}
+            >
             Açık Artırma Listesi
-          </Button>
+            </Button>
+
 
           <Button block size="large" icon={<ClockCircleOutlined />}>
             Teklif Geçmişi
