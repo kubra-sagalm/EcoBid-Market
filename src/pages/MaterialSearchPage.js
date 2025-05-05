@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Typography, Table, Row, Col, Input, Select, Button, Space } from 'antd';
+import { useNavigate } from 'react-router-dom';
+
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -12,6 +14,7 @@ const data = [
 ];
 
 const MaterialSearchPage = () => {
+    const navigate = useNavigate();
   const [type, setType] = useState('');
   const [kg, setKg] = useState('');
 
@@ -29,7 +32,9 @@ const MaterialSearchPage = () => {
     {
       title: 'Çip Ücreti',
       key: 'action',
-      render: () => <Button>Bloke Et</Button>,
+      render: () => <Button onClick={() => navigate('/dealer/blocked-materials')}>
+      Bloke Et
+    </Button>
     },
   ];
 

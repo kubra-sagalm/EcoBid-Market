@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const { Title } = Typography;
 
 const CompanyPanel = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
   return (
     <Row

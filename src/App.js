@@ -20,7 +20,9 @@ import MaterialSearchPage from './pages/MaterialSearchPage';
 import PurchaseDetailPage from './pages/PurchaseDetailPage';
 import OfferDetailPage from './pages/OfferDetailPage';
 import CompanyAuctionPage from './pages/CompanyAuctionPage';
-
+import GiveOfferPage from './pages/GiveOfferPage';
+import DealerCompanySalePage from './pages/DealerCompanySalePage';
+import BlockedMaterialsPage from './pages/BlockedMaterialsPage';
 
 function App() {
   return (
@@ -44,6 +46,10 @@ function App() {
         <Route path="/dealer/offer-detail" element={<OfferDetailPage />} />
         <Route path="/dealer/auctions" element={<AuctionListPage />} />
         <Route path="/company-auctions" element={<CompanyAuctionPage />} />
+        <Route path="/company/give-offer" element={<GiveOfferPage />} />
+        <Route path="/dealer/company-sale" element={<DealerCompanySalePage />} />
+        <Route path="/dealer/blocked-materials" element={<BlockedMaterialsPage />} />
+
 
 
       </Routes>
