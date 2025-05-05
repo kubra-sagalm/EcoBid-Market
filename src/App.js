@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import 'antd/dist/reset.css';
+import RegisterPage from './pages/RegisterPage';
+import './styles/theme.css';
+import SelectRolePage from './pages/SelectRolePage';
+import IndividualPanel from './pages/IndividualPanel';
+import MaterialAddPage from './pages/MaterialAddPage';
+import RewardStorePage from './pages/RewardStorePage';
+import MaterialHistoryPage from './pages/MaterialHistoryPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/select-role" element={<SelectRolePage />} /> {/* Yeni route */}
+        <Route path="/individual" element={<IndividualPanel />} />
+        <Route path="/material-add" element={<MaterialAddPage />} />
+        <Route path="/reward-store" element={<RewardStorePage />} />
+        <Route path="/material-history" element={<MaterialHistoryPage />} />
+      </Routes>
+    </Router>
   );
 }
 

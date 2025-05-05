@@ -1,0 +1,35 @@
+/* styles/theme.css */
+body {
+    background-color: #E8F5E9; /* Açık yeşil arka plan */
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .ant-typography h2 {
+    color: #388E3C;
+  }
+  
+  .ant-btn-primary {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+  }
+  
+  .ant-btn-primary:hover {
+    background-color: #388E3C !important;
+    border-color: #388E3C !important;
+  }
+  
+  .ant-btn {
+    border-radius: 6px;
+  }
+  
+  .ant-input {
+    background-color: #f8fff8;
+  }
+  
+  .ant-radio-wrapper {
+    font-weight: 500;
+    color: #2e7d32;
+  }
+  
