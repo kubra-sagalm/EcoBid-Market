@@ -28,7 +28,14 @@ const DealerPanel = () => {
             Malzeme Arama
             </Button>
 
-          <Button block size="large">Satın Alınacak Malzemeler</Button>
+            <Button
+                block
+                style={{ fontWeight: 'bold' }}
+                onClick={() => navigate('/dealer/purchase-detail')}
+                >
+                Satın Alınacak Malzemeler
+                </Button>
+
           <Button block size="large">Açık Artırma Listesi</Button>
           <Button block size="large">Firma Satışı</Button>
           <Button block size="large" onClick={() => navigate('/dealer/chip-history')}>
