@@ -1,20 +1,37 @@
 import React from 'react';
-import { Menu } from 'antd';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+  const navbarStyle = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '12px 24px',
+    backgroundColor: '#ffffff',
+    alignItems: 'center'
+  };
+
+  const rightMenuStyle = {
+    display: 'flex',
+    gap: '16px'
+  };
+
+  const linkStyle = {
+    textDecoration: 'none',
+    color: '#2e7d32',
+    fontWeight: 'bold'
+  };
+
   return (
-    <Menu
-    mode="horizontal"
-    style={{
-      borderBottom: 'none',
-      justifyContent: 'flex-end',
-      padding: '20px',
-      backgroundColor: '#E8F5E9'
-    }}>
-      <Menu.Item key="login">Giriş</Menu.Item>
-      <Menu.Item key="about">Hakkımızda</Menu.Item>
-      <Menu.Item key="contact">İletişim</Menu.Item>
-    </Menu>
+    <nav style={navbarStyle}>
+      <div>
+        {/* Sol kısım (logo vs.) istersen buraya ekleyebilirsin */}
+      </div>
+      <div style={rightMenuStyle}>
+        <Link to="/login" style={linkStyle}>Giriş</Link>
+        <Link to="/about" style={linkStyle}>Hakkımızda</Link>
+        <Link to="/contact" style={linkStyle}>İletişim</Link>
+      </div>
+    </nav>
   );
 };
 

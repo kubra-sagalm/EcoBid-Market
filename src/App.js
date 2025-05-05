@@ -49,8 +49,7 @@ function App() {
         <Route path="/company/give-offer" element={<GiveOfferPage />} />
         <Route path="/dealer/company-sale" element={<DealerCompanySalePage />} />
         <Route path="/dealer/blocked-materials" element={<BlockedMaterialsPage />} />
-
-
+        <Route path="/login" element={<LoginPage />} />
 
       </Routes>
     </Router>
