@@ -14,10 +14,16 @@ const CompanyPanel = () => {
   return (
     <Row
       justify="center"
-      align="middle"
+      align="start"
       style={{ minHeight: '100vh', backgroundColor: '#E8F5E9', padding: '60px 0' }}
     >
-      <Col xs={22} sm={18} md={12} lg={8}>
+      <Col
+  xs={22}
+  sm={18}
+  md={12}
+  lg={8}
+  style={{ marginTop: '90px' }} // içeriği aşağı kaydırır
+>
         <Title level={2} style={{ color: '#2e7d32', textAlign: 'center', marginBottom: '40px' }}>
           Firma Paneli
         </Title>

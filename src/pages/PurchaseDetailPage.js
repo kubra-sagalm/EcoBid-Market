@@ -9,8 +9,7 @@ const PurchaseDetailPage = () => {
       <Col xs={22} sm={20} md={16} lg={12}>
         <Card style={{ borderRadius: 12, padding: 24 }}>
           <Row justify="space-between" align="middle">
-            <Title level={2} style={{ color: '#2e7d32' }}>Satın Alınacak Ürünler</Title>
-            <Text strong>DETAY SAYFASI</Text>
+            <Title level={2} style={{ color: '#2e7d32' }}>Blokeli Ürün Detayı</Title>
           </Row>
 
           <Title level={4} style={{ marginTop: 32 }}>Ürün Bilgileri</Title>

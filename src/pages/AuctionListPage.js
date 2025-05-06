@@ -62,7 +62,7 @@ const AuctionListPage = () => {
   return (
     <Row justify="center" style={{ backgroundColor: '#E8F5E9', minHeight: '100vh', padding: '60px 16px' }}>
       <Col xs={24} sm={22} md={20} lg={16}>
-        <Title level={2} style={{ color: '#2e7d32', marginBottom: '24px' }}>Açık Artırma Listesi</Title>
+        <Title level={2} style={{ color: '#2e7d32', marginBottom: '24px' }}>Açık Artırmaya Gönderilen Ürünler</Title>
 
         <Search
           placeholder="Malzeme Ara"

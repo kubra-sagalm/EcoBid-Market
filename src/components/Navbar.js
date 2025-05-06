@@ -6,7 +6,7 @@ const Navbar = () => {
     display: 'flex',
     justifyContent: 'space-between',
     padding: '12px 24px',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#E8F5E9',
     alignItems: 'center'
   };
 
