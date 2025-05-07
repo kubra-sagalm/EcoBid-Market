@@ -23,6 +23,7 @@ import CompanyAuctionPage from './pages/CompanyAuctionPage';
 import GiveOfferPage from './pages/GiveOfferPage';
 import DealerCompanySalePage from './pages/DealerCompanySalePage';
 import BlockedMaterialsPage from './pages/BlockedMaterialsPage';
+import BidHistoryPage from './pages/BidHistoryPage';
 
 function App() {
   return (
@@ -50,6 +51,8 @@ function App() {
         <Route path="/dealer/company-sale" element={<DealerCompanySalePage />} />
         <Route path="/dealer/blocked-materials" element={<BlockedMaterialsPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/bid-history" element={<BidHistoryPage />} />
+
 
       </Routes>
     </Router>

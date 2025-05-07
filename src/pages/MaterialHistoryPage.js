@@ -1,11 +1,61 @@
-import React from 'react';
-import { Typography, Button, Table, Row, Col, Space } from 'antd';
+import React, { useState } from 'react';
+import { Typography, Button, Table, Row, Col, Popconfirm } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 const { Title } = Typography;
 
 const MaterialHistoryPage = () => {
   const navigate = useNavigate();
+
+  const [tableData, setTableData] = useState([
+    {
+      key: '1',
+      type: 'Cam',
+      amount: '5 kg',
+      date: '24.04.2024',
+      chip: '+50 çip',
+      status: '',
+    },
+    {
+      key: '2',
+      type: 'Plastik',
+      amount: '10 kg',
+      date: '20.04.2024',
+      chip: '+100 çip',
+      status: '',
+    },
+    {
+      key: '3',
+      type: 'Kağıt',
+      amount: '3 kg',
+      date: '15.04.2024',
+      chip: '+30 çip',
+      status: 'Bloke Konuldu',
+    },
+    {
+      key: '4',
+      type: 'Cam',
+      amount: '8 kg',
+      date: '10.04.2024',
+      chip: '+80 çip',
+      status: 'iptal edildi',
+    },
+    {
+      key: '5',
+      type: 'Cam',
+      amount: '4 kg',
+      date: '10.04.2024',
+      chip: '+40 çip',
+      status: 'Satıldı',
+    },
+  ]);
+
+  const handleCancel = (key) => {
+    const updatedData = tableData.map((item) =>
+      item.key === key ? { ...item, status: 'iptal edildi' } : item
+    );
+    setTableData(updatedData);
+  };
 
   const columns = [
     {
@@ -32,50 +82,22 @@ const MaterialHistoryPage = () => {
       title: 'Durum',
       dataIndex: 'status',
       key: 'status',
-      render: (text) => <strong>{text}</strong>,
-    },
-  ];
+      render: (text, record) => {
+        const isDisabled = text.trim().toLowerCase() === 'satıldı' || text.trim().toLowerCase() === 'bloke konuldu' || text.trim().toLowerCase() === 'iptal edildi';
 
-  const data = [
-    {
-      key: '1',
-      type: 'Cam',
-      amount: '5 kg',
-      date: '24.04.2024',
-      chip: '+50 çip',
-      status: '',
-    },
-    {
-      key: '2',
-      type: 'Plastik',
-      amount: '10 kg',
-      date: '20.04.2024',
-      chip: '+100 çip',
-      status: '',
-    },
-    {
-      key: '3',
-      type: 'Kağıt',
-      amount: '3 kg',
-      date: '15.04.2024',
-      chip: '+30 çip',
-      status: ' ',
-    },
-    {
-      key: '4',
-      type: 'Cam',
-      amount: '8 kg',
-      date: '10.04.2024',
-      chip: '+80 çip',
-      status: 'iptal edildi',
-    },
-    {
-      key: '5',
-      type: 'Cam',
-      amount: '4 kg',
-      date: '10.04.2024',
-      chip: '+40 çip',
-      status: 'Satıldı',
+        return isDisabled ? (
+          <strong>{text}</strong>
+        ) : (
+          <Popconfirm
+            title="Bu malzemeyi iptal etmek istediğinizden emin misiniz?"
+            onConfirm={() => handleCancel(record.key)}
+            okText="Evet"
+            cancelText="Hayır"
+          >
+            <Button danger>İptal Et</Button>
+          </Popconfirm>
+        );
+      },
     },
   ];
 
@@ -94,7 +116,7 @@ const MaterialHistoryPage = () => {
 
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={tableData}
         pagination={false}
         bordered
         style={{ backgroundColor: 'white' }}
