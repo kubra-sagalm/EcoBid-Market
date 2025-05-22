@@ -1,38 +1,48 @@
-import React, { useState } from 'react';
-import { Typography, Table, Input, Row, Col } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Typography, Table, Input, Row, Col, message } from 'antd';
 
 const { Title } = Typography;
 const { Search } = Input;
 
-const initialData = [
-  {
-    key: '1',
-    name: 'Hurda Plastik',
-    amount: '5 kg',
-    date: '15.04.2024',
-    status: 'İPTAL'
-  },
-  {
-    key: '2',
-    name: 'Alüminyum Kutu',
-    amount: '3 kg',
-    date: '14.04.2024',
-    status: 'İPTAL'
-  },
-  {
-    key: '3',
-    name: 'Kağıt Atık',
-    amount: '10 kg',
-    date: '10.04.2024',
-    status: 'İPTAL'
-  }
-];
-
 const AuctionListPage = () => {
+  const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState('');
 
-  const filteredData = initialData.filter((item) =>
-    item.name.toLowerCase().includes(searchText.toLowerCase())
+  useEffect(() => {
+    const fetchAuctionData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const response = await fetch("http://localhost:5249/api/Araci/acik-artirmalarim", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) throw new Error("Veri alınamadı");
+
+        const result = await response.json();
+
+        const formatted = result.map((item, index) => ({
+          key: item.id || index.toString(),
+          name: item.turu,
+          amount: `${item.miktarKg} kg`,
+          date: new Date(item.baslangicTarihi).toLocaleDateString("tr-TR"),
+          status: item.durum?.toUpperCase() || "-"
+        }));
+
+        setData(formatted);
+      } catch (err) {
+        console.error("Açık artırma verisi hatası:", err);
+        message.error("❌ Açık artırmalar yüklenemedi.");
+      }
+    };
+
+    fetchAuctionData();
+  }, []);
+
+  const filteredData = data.filter((item) =>
+    item.name?.toLowerCase().includes(searchText.toLowerCase())
   );
 
   const columns = [
@@ -47,7 +57,7 @@ const AuctionListPage = () => {
       key: 'amount'
     },
     {
-      title: 'Açık Arttırmaya Konulduğu Tarih',
+      title: 'Açık Artırmaya Konulduğu Tarih',
       dataIndex: 'date',
       key: 'date'
     },
@@ -55,7 +65,7 @@ const AuctionListPage = () => {
       title: 'Durum',
       dataIndex: 'status',
       key: 'status',
-      render: (text) => <strong style={{ color: 'red' }}>{text}</strong>
+      render: (text) => <strong style={{ color: text === "İPTAL" ? "red" : "#2e7d32" }}>{text}</strong>
     }
   ];
 

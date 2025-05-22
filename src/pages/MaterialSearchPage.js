@@ -1,46 +1,117 @@
-import React, { useState } from 'react';
-import { Typography, Table, Row, Col, Input, Select, Button, Space } from 'antd';
+import React, { useEffect, useState } from 'react';
+import {
+  Typography, Table, Row, Col, Input, Select,
+  Button, Space, message
+} from 'antd';
 import { useNavigate } from 'react-router-dom';
-
 
 const { Title } = Typography;
 const { Option } = Select;
 
-const data = [
-  { key: '1', material: 'Plastik', kg: 5, name: 'Ahmet Yılmaz', no: '1001', date: '20.04.2024' },
-  { key: '2', material: 'Cam', kg: 3, name: 'Ayşe Demir Demir', no: '1002', date: '18.04.2024' },
-  { key: '3', material: 'Kağıt', kg: 10, name: 'Mehmet Kara', no: '1003', date: '15.04.2024' },
-  { key: '4', material: 'Plastik', kg: 2, name: 'Zeynep Çelik', no: '1004', date: '10.04.2024' },
-];
-
 const MaterialSearchPage = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [type, setType] = useState('');
   const [kg, setKg] = useState('');
+  const [data, setData] = useState([]);
 
-  const filtered = data.filter(item =>
-    (type ? item.material === type : true) &&
-    (kg ? item.kg === parseInt(kg) : true)
+  useEffect(() => {
+    const fetchMaterials = async () => {
+      try {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch("http://localhost:5249/api/Araci/bekleyen-malzeme-listesi", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) throw new Error("Veri alınamadı");
+
+        const result = await response.json();
+
+        const formatted = result.map((item, index) => ({
+          key: item.id,
+          material: capitalize(item.turu),
+          kg: item.miktarKg,
+          musteriId: item.musteriId,
+          adSoyad: item.musteriAdSoyad,
+          adres: item.musteriAdres,
+          telefon: item.musteriTelefon,
+          tarih: new Date(item.tarih).toLocaleDateString('tr-TR'),
+          chip: item.miktarKg * 10,
+          tl: (item.miktarKg * 10 * 0.25).toFixed(2) + " ₺"
+        }));
+
+        setData(formatted);
+      } catch (err) {
+        console.error("Veri çekme hatası:", err);
+        message.error("❌ Malzemeler yüklenemedi.");
+      }
+    };
+
+    fetchMaterials();
+  }, []);
+
+  const handleBlock = async (malzemeId) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch("http://localhost:5249/api/Araci/malzeme-bloke-et", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(malzemeId),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "İşlem başarısız.");
+      }
+
+      message.success("✅ Malzeme başarıyla bloke edildi.");
+
+      setData(prev => prev.filter(item => item.key !== malzemeId));
+    } catch (err) {
+      console.error("Bloke etme hatası:", err);
+      message.error("❌ " + err.message);
+    }
+  };
+
+  const filtered = data.filter(
+    (item) =>
+      (type ? item.material === type : true) &&
+      (kg ? item.kg === parseInt(kg) : true)
   );
 
   const columns = [
-    { title: 'Malzeme', dataIndex: 'material', key: 'material' },
+    { title: 'Malzeme Türü', dataIndex: 'material', key: 'material' },
     { title: 'Miktar (kg)', dataIndex: 'kg', key: 'kg' },
-    { title: 'Müşteri Adı', dataIndex: 'name', key: 'name' },
-    { title: 'Müşteri No', dataIndex: 'no', key: 'no' },
-    { title: 'Tarih', dataIndex: 'date', key: 'date' },
+    { title: 'Çip Ücreti', dataIndex: 'chip', key: 'chip', render: v => `${v} çip` },
+    { title: 'TL Karşılığı', dataIndex: 'tl', key: 'tl' },
+    { title: 'Kullanıcı Adı', dataIndex: 'adSoyad', key: 'adSoyad' },
+    { title: 'Kullanıcı ID', dataIndex: 'musteriId', key: 'musteriId' },
+    { title: 'Telefon', dataIndex: 'telefon', key: 'telefon' },
+    { title: 'Adres', dataIndex: 'adres', key: 'adres' },
+    { title: 'Tarih', dataIndex: 'tarih', key: 'tarih' },
     {
-      title: 'Çip Ücreti',
+      title: 'İşlem',
       key: 'action',
-      render: () => <Button onClick={() => navigate('/dealer/blocked-materials')}>
-      Bloke Et
-    </Button>
+      render: (_, record) => (
+        <Button
+          type="primary"
+          onClick={() => handleBlock(record.key)}
+        >
+          Bloke Et
+        </Button>
+      ),
     },
   ];
 
   return (
     <Row justify="center" style={{ backgroundColor: '#E8F5E9', minHeight: '100vh', padding: '60px 16px' }}>
-      <Col xs={24} sm={22} md={20} lg={16}>
+      <Col xs={24} sm={22} md={20} lg={18}>
         <Title level={2} style={{ color: '#2e7d32', marginBottom: 24 }}>Malzeme Arama</Title>
 
         <Space size="middle" style={{ marginBottom: 24 }} wrap>
@@ -48,7 +119,7 @@ const MaterialSearchPage = () => {
             placeholder="Tür:"
             style={{ width: 180 }}
             value={type || undefined}
-            onChange={value => setType(value)}
+            onChange={(value) => setType(value)}
             allowClear
           >
             <Option value="Plastik">Plastik</Option>
@@ -60,7 +131,7 @@ const MaterialSearchPage = () => {
             placeholder="Kg:"
             style={{ width: 120 }}
             value={kg}
-            onChange={e => setKg(e.target.value)}
+            onChange={(e) => setKg(e.target.value)}
             type="number"
           />
         </Space>
@@ -69,11 +140,16 @@ const MaterialSearchPage = () => {
           dataSource={filtered}
           columns={columns}
           bordered
-          pagination={false}
+          pagination={{ pageSize: 8 }}
         />
       </Col>
     </Row>
   );
+};
+
+const capitalize = (str) => {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
 export default MaterialSearchPage;

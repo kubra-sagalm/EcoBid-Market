@@ -1,18 +1,60 @@
-import React from 'react';
-import { Typography, Card, Button, Row, Col } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Typography, Card, Button, Row, Col, message } from 'antd';
 
 const { Title, Text } = Typography;
 
-const materials = [
-  { type: 'Cam', amount: '10 kg', date: '20.04.2024' },
-  { type: 'Plastik', amount: '5 kg', date: '18.04.2024' },
-  { type: 'Kağıt', amount: '20 kg', date: '10.04.2024' },
-];
-
 const DealerCompanySalePage = () => {
-  const handleSendToAuction = (item) => {
-    console.log(`Açık artırmaya gönderildi: ${item.type}`);
-    // API veya state yönetimi eklenebilir
+  const [materials, setMaterials] = useState([]);
+
+  // Satın alınan özet verileri çek
+  useEffect(() => {
+    const fetchMaterials = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await fetch("http://localhost:5249/api/Araci/satin-aldiklarim-ozet", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (!response.ok) throw new Error("Veri alınamadı");
+
+        const data = await response.json();
+        setMaterials(data);
+      } catch (err) {
+        console.error("Veri hatası:", err);
+        message.error("❌ Satın alınan malzemeler yüklenemedi.");
+      }
+    };
+
+    fetchMaterials();
+  }, []);
+
+  // Açık artırmaya gönderme işlemi
+  const handleSendToAuction = async (item) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      // SatinAlimId'yi burada alman gerekiyor. Örnek amaçlı 1 yazılmıştır, backend bu alanı istiyor!
+      const response = await fetch("http://localhost:5249/api/Araci/acik-artirmaya-gonder", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          satinAlimId: item.satinAlimId // Gerçek ID'yi API'den alman gerekir
+        })
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText);
+      }
+
+      message.success("✅ Açık artırmaya gönderildi.");
+    } catch (err) {
+      console.error("Gönderme hatası:", err);
+      message.error(`❌ ${err.message}`);
+    }
   };
 
   return (
@@ -28,11 +70,10 @@ const DealerCompanySalePage = () => {
             bodyStyle={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
           >
             <div>
-              <Text strong>{item.type}</Text><br />
-              <Text>{item.amount}</Text><br />
-              <Text type="secondary">{item.date}</Text>
+              <Text strong>{item.turu}</Text><br />
+              <Text>{item.toplamKg} kg</Text>
             </div>
-            <Button onClick={() => handleSendToAuction(item)}>
+            <Button type="primary" onClick={() => handleSendToAuction(item)}>
               Açık Artırmaya Gönder
             </Button>
           </Card>
